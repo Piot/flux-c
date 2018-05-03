@@ -24,13 +24,13 @@ SOFTWARE.
 
 */
 #include <arpa/inet.h>
+#include <clog/clog.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <flux/flux_socket.h>
 #include <netdb.h>
 #include <stdio.h>
 #include <string.h>
-#include <tyran/tyran_log.h>
 
 static int create()
 {
@@ -52,7 +52,7 @@ static void set_peer_address(flux_socket* self, const char* name, int port)
 
 	int s = getaddrinfo(name, 0, &hints, &result);
 	if (s < 0) {
-		TYRAN_LOG_WARN("set_peer_address Error!%d", s);
+		CLOG_WARN("set_peer_address Error!%d", s);
 		return;
 	}
 
@@ -75,11 +75,11 @@ tyran_boolean flux_send(flux_socket* self, const uint8_t* data, size_t size)
 	ssize_t number_of_octets_sent = sendto(self->handle, data, size, 0, (struct sockaddr*) &self->peer_address, sizeof(self->peer_address));
 
 	if (number_of_octets_sent < 0) {
-		TYRAN_LOG_WARN("Error send! %d\n", number_of_octets);
+		CLOG_WARN("Error send! %ld\n", number_of_octets_sent);
 		return TYRAN_FALSE;
 	}
 
-	return ((size_t)number_of_octets_sent == size);
+	return ((size_t) number_of_octets_sent == size);
 }
 
 size_t flux_receive(flux_socket* self, uint8_t* data, size_t size)
@@ -92,7 +92,7 @@ size_t flux_receive(flux_socket* self, uint8_t* data, size_t size)
 		if (errno == EAGAIN || errno == EWOULDBLOCK) {
 			return 0;
 		} else {
-			TYRAN_LOG_WARN("Error receive! %d\n", number_of_octets);
+			CLOG_WARN("Error receive! %ld\n", number_of_octets);
 			return 0;
 		}
 	}
