@@ -6,6 +6,8 @@
   "keywords": ["network"],
   "license": "MIT",
   "src": [
+      "src/include/flux/flux_socket.h",
+      "src/lib/flux_socket.c"
   ],
   "dependencies" : {
       "piot/clog" : "*",
