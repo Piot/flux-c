@@ -1,0 +1,14 @@
+{
+  "name": "flux",
+  "version": "0.0.1",
+  "repo": "piot/flux-c",
+  "description": "Datagram communications",
+  "keywords": ["network"],
+  "license": "MIT",
+  "src": [
+  ],
+  "dependencies" : {
+      "piot/clog" : "*",
+      "piot/tyran" : "*"
+  }
+}

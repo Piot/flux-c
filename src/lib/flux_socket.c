@@ -97,5 +97,5 @@ size_t flux_receive(flux_socket* self, uint8_t* data, size_t size)
 		}
 	}
 
-	return number_of_octets;
+	return (size_t) number_of_octets;
 }
