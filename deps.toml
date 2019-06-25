@@ -1,0 +1,12 @@
+depsversion = "0.0.0"
+
+name = "piot/flux-c"
+version = "0.0.0"
+
+[[dependencies]]
+name = 'piot/clog'
+version = "*"
+
+[[dependencies]]
+name = 'piot/tyran'
+version = "*"
