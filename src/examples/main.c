@@ -25,19 +25,28 @@ SOFTWARE.
 */
 #include <flux/flux_socket.h>
 #include <stdio.h>
+#include <clog/clog.h>
 
 #include <unistd.h>
 
+clog_config g_clog;
+
+static void console_log(enum clog_type type, const char* string)
+{
+	puts(string);
+}
+
 int main(int argc, char* argv[])
 {
+	g_clog.log = console_log;
+	CLOG_VERBOSE("example start")
 	flux_socket socket;
-
+	
 	flux_init(&socket, "127.0.0.1", 32000);
+	CLOG_VERBOSE("initialized")
 	while (1) {
-		printf("Sending!");
+		CLOG_INFO("sending")
 		flux_send(&socket, (const uint8_t*) "Hello", 5);
 		sleep(1);
 	}
-
-	return 0;
 }

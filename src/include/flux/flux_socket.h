@@ -35,7 +35,7 @@ typedef struct flux_socket {
 	struct sockaddr_in peer_address;
 } flux_socket;
 
-void flux_init(flux_socket* self, const char* name, int port);
+void flux_init(flux_socket* self, const char* name, uint16_t port);
 tyran_boolean flux_send(flux_socket* self, const uint8_t* data, size_t size);
 size_t flux_receive(flux_socket* self, uint8_t* data, size_t size);
 

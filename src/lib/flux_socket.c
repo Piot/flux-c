@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+
 #include <arpa/inet.h>
 #include <clog/clog.h>
 #include <errno.h>
@@ -39,7 +40,7 @@ static int create()
 	return handle;
 }
 
-static void set_peer_address(flux_socket* self, const char* name, int port)
+static void set_peer_address(flux_socket* self, const char* name, uint16_t port)
 {
 	struct sockaddr_in* peer = &self->peer_address;
 
@@ -52,7 +53,7 @@ static void set_peer_address(flux_socket* self, const char* name, int port)
 
 	int s = getaddrinfo(name, 0, &hints, &result);
 	if (s < 0) {
-		CLOG_WARN("set_peer_address Error!%d", s);
+		CLOG_WARN("set_peer_address Error!%d", s)
 		return;
 	}
 
@@ -64,7 +65,7 @@ static void set_peer_address(flux_socket* self, const char* name, int port)
 	freeaddrinfo(result);
 }
 
-void flux_init(flux_socket* self, const char* name, int port)
+void flux_init(flux_socket* self, const char* name, uint16_t port)
 {
 	self->handle = create();
 	set_peer_address(self, name, port);
@@ -75,7 +76,7 @@ tyran_boolean flux_send(flux_socket* self, const uint8_t* data, size_t size)
 	ssize_t number_of_octets_sent = sendto(self->handle, data, size, 0, (struct sockaddr*) &self->peer_address, sizeof(self->peer_address));
 
 	if (number_of_octets_sent < 0) {
-		CLOG_WARN("Error send! %ld\n", number_of_octets_sent);
+		CLOG_WARN("Error send! %ld\n", number_of_octets_sent)
 		return TYRAN_FALSE;
 	}
 
@@ -92,7 +93,7 @@ size_t flux_receive(flux_socket* self, uint8_t* data, size_t size)
 		if (errno == EAGAIN || errno == EWOULDBLOCK) {
 			return 0;
 		} else {
-			CLOG_WARN("Error receive! %ld\n", number_of_octets);
+			CLOG_WARN("Error receive! %ld\n", number_of_octets)
 			return 0;
 		}
 	}
