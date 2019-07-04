@@ -33,11 +33,15 @@ clog_config g_clog;
 
 static void console_log(enum clog_type type, const char* string)
 {
+	(void) type;
 	puts(string);
 }
 
 int main(int argc, char* argv[])
 {
+	(void) argc;
+	(void) argv;
+
 	g_clog.log = console_log;
 	CLOG_VERBOSE("example start")
 	flux_socket socket;
